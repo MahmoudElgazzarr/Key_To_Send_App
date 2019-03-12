@@ -1,49 +1,117 @@
 /*
  * UART.c
  *
- *  Created on: Mar 12, 2019
- *      Author: AVE-LAP-016
- */
-#include "UART.h"
+ * Created: 2/27/2019 1:16:53 PM
+ *  Author: AVE-LAP-016
+ */ 
+#include "../includes/UART.h"
 
+ void UART_Init(void)
+ {
+	 
+	 S_UART_config uart_object = {BAUDRATE,NO_STOPBITS,PARITYMODE,DATASIZE,SPEEDMODE};
+	 /* calculate baud rate */
+	 uint16 ubbr = (F_CPU/(16*uart_object.baud_rate)) - 1 ;
+	 uint8 ucsrc = 0 ;
 
-void uart0_init(void)
+	 /* set baud rate */
+	 _UBBRH = (uint8)((0xFF00 & ubbr)>>8) ;
+	 _UBBRL = (uint8)(0x00FF & ubbr) ;
+	 
+	
+	  Set_Bit(ucsrc,_URSEL);
+	 /* enable transmit and receive */
+	 _UCSRB = (1<<_RXEN)|(1<<_TXEN) ;
+	 
+  /* speed mode */
+  switch(uart_object.speed_mode)
+  {
+	case DISABLED :
+	  Clear_Bit(_UCSRA,_U2X);
+	  break;
+	  
+	case ENABLED :
+	  Set_Bit(_UCSRA,_U2X);
+	  break;
+  }
+  /* number of stop bits */
+  switch(uart_object.no_of_stop_bits)
+  {
+	 case ONE_STOP_BIT :
+	         Clear_Bit(ucsrc,_USBS);
+			 break;
+	 case TWO_STOP_BITS :
+	         Set_Bit(ucsrc,_USBS);
+	         break;
+  }
+  
+   /* data_size */
+  switch (uart_object.data_size)
+   {
+	case FIVE_BITS :
+		 Clear_Bit(ucsrc,_UCSZ0);
+		 Clear_Bit(ucsrc,_UCSZ1);
+		 Clear_Bit(_UCSRB,_UCSZ2);
+		break ;
+		
+	case SIX_BITS :
+		 Set_Bit(ucsrc,_UCSZ0);
+		 Clear_Bit(ucsrc,_UCSZ1);
+		 Clear_Bit(_UCSRB,_UCSZ2);
+		break;
+		
+	case SEVEN_BITS :
+		 Clear_Bit(ucsrc,_UCSZ0);
+		 Set_Bit(ucsrc,_UCSZ1);
+		 Clear_Bit(_UCSRB,_UCSZ2);
+		 break;
+	case EIGHT_BITS :
+	     Set_Bit(ucsrc,_UCSZ0);
+	     Set_Bit(ucsrc,_UCSZ1);
+		 Clear_Bit(_UCSRB,_UCSZ2);
+	    break;
+	case NINE_BITS :
+	     Set_Bit(ucsrc,_UCSZ0);
+	     Set_Bit(ucsrc,_UCSZ1);
+		 Set_Bit(_UCSRB,_UCSZ2);
+	    break;
+   }
+	
+   
+	/* setting parity mode */
+	switch (uart_object.parity_mode)
+	{
+		case NO_PARITY :
+		     Clear_Bit(ucsrc,_UPM0);
+		     Clear_Bit(ucsrc,_UPM1);
+			 break ;
+		case EVEN_PARITY :
+		     Clear_Bit(ucsrc,_UPM0);
+		     Set_Bit(ucsrc,_UPM1);
+		     break;
+		case ODD_PARITY :
+		     Set_Bit(ucsrc,_UPM0);
+		     Set_Bit(ucsrc,_UPM1);
+			 break;
+	}
+	
+		_UCSRC = ucsrc ;
+	
+
+ }
+ 
+ void UART_Transmit(uint8 Data)
+ {
+	  while( Get_Bit(_UCSRA,_UDRE) == 0 ); 
+	  
+	 _UDR = Data ;
+ }
+
+uint8 UART_Receive()
 {
-    //
-        // Enable the UART0 module.
-        //
-        //
-        // Enable the GPIOB peripheral
-        //
-        SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
-        //
-        // Wait for the GPIOB module to be ready.
-        //
-        while(!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOA))
-        {
-        }
-
-        /* Configure GPIO Port B pins 0 and 1 to be used as UART1.*/
-        GPIOPinTypeUART(GPIO_PORTA_BASE, GPIO_PIN_0 | GPIO_PIN_1);
-        //
-        // Enable UART1 functionality on GPIO Port B pins 0 and 1.
-        //
-        GPIOPinConfigure(GPIO_PA0_U0RX);
-        GPIOPinConfigure(GPIO_PA1_U0TX);
-
-        SysCtlPeripheralEnable(SYSCTL_PERIPH_UART0);
-
-        /* Wait for the UART0 module to be ready. */
-        while(!SysCtlPeripheralReady(SYSCTL_PERIPH_UART0))
-        {
-        }
-        // Initialize the UART. Set the baud rate, number of data bits, turn off
-        // parity, number of stop bits, and stick mode. The UART is enabled by the
-        // function call.
-        //
-        UARTConfigSetExpClk(UART0_BASE, SysCtlClockGet(), 38400,
-        (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE |
-        UART_CONFIG_PAR_NONE));
+	/* Wait for data to be received */
+	while ( Get_Bit(_UCSRA,_RXC) == 0  );
+	
+	/* Get and return received data from buffer */
+	return _UDR;
 }
-
-
