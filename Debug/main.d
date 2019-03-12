@@ -13,6 +13,7 @@ main.obj: C:/ti/TivaWare_C_Series-2.1.4.178/inc/hw_memmap.h
 main.obj: C:/ti/TivaWare_C_Series-2.1.4.178/driverlib/debug.h
 main.obj: C:/ti/TivaWare_C_Series-2.1.4.178/driverlib/gpio.h
 main.obj: C:/ti/TivaWare_C_Series-2.1.4.178/driverlib/sysctl.h
+main.obj: ../Keypad.h
 
 ../main.c: 
 C:/ti/ccsv8/tools/compiler/ti-cgt-arm_18.1.1.LTS/include/stdint.h: 
@@ -27,3 +28,4 @@ C:/ti/TivaWare_C_Series-2.1.4.178/inc/hw_memmap.h:
 C:/ti/TivaWare_C_Series-2.1.4.178/driverlib/debug.h: 
 C:/ti/TivaWare_C_Series-2.1.4.178/driverlib/gpio.h: 
 C:/ti/TivaWare_C_Series-2.1.4.178/driverlib/sysctl.h: 
+../Keypad.h: 
