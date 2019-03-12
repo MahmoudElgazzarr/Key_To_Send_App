@@ -59,7 +59,7 @@ void Keypad_Init(void)
 /*******************************************************************/
 uint8_t Keypad_GetPressedKey(void)
 {
-    static uint8_t key=0;
+    uint8_t key=0;
     /* Set Column 1 */
     GPIOPinWrite(KEYPADCOL1PORT, KEYPADCOL1PIN,LOW);
     GPIOPinWrite(KEYPADCOL2PORT, KEYPADCOL2PIN,KEYPADCOL2PIN);
