@@ -55,11 +55,12 @@ uint8 UART0_receive(void)
 {
     uint8 data ;
 
-    while(!UARTCharsAvail(UART0_BASE));
+    if(!UARTCharsAvail(UART0_BASE))
+    {
+     data = UARTCharGetNonBlocking(UART0_BASE) ;
+     return data ;
+    }
 
-    data = UARTCharGetNonBlocking(UART0_BASE) ;
-
-    return data ;
 }
 void UART0_disable()
 {
