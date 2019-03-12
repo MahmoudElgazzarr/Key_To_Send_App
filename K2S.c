@@ -11,7 +11,7 @@
 void K2S_Task(void)
 {
 
-    if(Debounce_Flag == 1)
+    if(Debounce_Flag >= 5)
     {
         DataToSend = Keypad_GetPressedKey();
         UART_Flag = 1 ;

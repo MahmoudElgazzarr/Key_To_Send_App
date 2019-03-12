@@ -23,9 +23,9 @@ int main(void)
     scheduler_Init();
     /*Add Four Tasks*/
 
-   scheduler_Add_Task(Debounce_Task,5,priority_1,ID_1);
+   scheduler_Add_Task(Debounce_Task,10,priority_1,ID_1);
    scheduler_Add_Task(UART0_Send_Task,50,priority_1,ID_0);
-   scheduler_Add_Task(K2S_Task,100,priority_1,ID_2);
+   scheduler_Add_Task(K2S_Task,70,priority_1,ID_2);
 
     scheduler_Start(OS_TICK_INTERVAL_MSEC);
 

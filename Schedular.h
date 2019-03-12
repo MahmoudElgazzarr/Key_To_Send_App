@@ -18,7 +18,7 @@
 #define NUM_TASKS 3
 
 /*defines Maxmium Number of Tasks*/
-#define MAX_NUM_TASKS 9
+#define MAX_NUM_TASKS 4
 
 #define TRUE 1
 #define FALSE 0
