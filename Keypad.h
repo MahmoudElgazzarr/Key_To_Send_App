@@ -33,7 +33,8 @@
 #define HIGH 1
 #define LOW 0
 void Keypad_Init(void);
-uint8_t Keypad_GetPressedKey_Task(void);
+extern uint8_t Keypad_GetPressedKey(void);
+
 
 
 #endif /* KEYPAD_H_ */

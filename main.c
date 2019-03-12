@@ -11,91 +11,22 @@
 #include "driverlib/gpio.h"
 #include "driverlib/sysctl.h"
 #include "Keypad.h"
+#include "Debouncing.h"
+#include "UART.h"
+#include "Schedular.h"
+#include "K2S.h"
 
 int main(void)
 {
-    uint8_t key = 0 ;
     Keypad_Init();
+    UART0_init();
+    scheduler_Init();
+    /*Add Four Tasks*/
 
-    /*add Code Here*/
-    volatile uint32_t ui32Loop;
-    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
-    while(!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOF));
-    GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, GPIO_PIN_1);
-    GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, GPIO_PIN_2);
-    GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, GPIO_PIN_3);
-    while(1)
-    {
-        // Turn on the LED.
+   scheduler_Add_Task(Debounce_Task,5,priority_1,ID_1);
+   scheduler_Add_Task(UART0_Send_Task,50,priority_1,ID_0);
+   scheduler_Add_Task(K2S_Task,100,priority_1,ID_2);
 
-       key = Keypad_GetPressedKey_Task();
-       if(key == 7 || key == 1 || key == 4)
-       {
-           GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0);
-           GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0);
-           GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, GPIO_PIN_1);
-           // Delay for a bit.
-           //
-           for(ui32Loop = 0; ui32Loop < 200000; ui32Loop++)
-           {
-           }
+    scheduler_Start(OS_TICK_INTERVAL_MSEC);
 
-          // Turn off the LED.
-          //
-          GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0x0);
-          // Delay for a bit.
-          //
-          for(ui32Loop = 0; ui32Loop < 200000; ui32Loop++)
-          {
-          }
-       }
-       else if (key ==8|| key == 5 || key == 2)
-       {
-           GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0);
-           GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0);
-           GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, GPIO_PIN_2);
-           // Delay for a bit.
-           //
-          for(ui32Loop = 0; ui32Loop < 200000; ui32Loop++)
-          {
-          }
-          //
-          // Turn off the LED.
-          //
-         GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0x0);
-         //
-         // Delay for a bit.
-         //
-         for(ui32Loop = 0; ui32Loop < 200000; ui32Loop++)
-         {
-         }
-      }
-      else if (key == 9|| key == 3 || key == 6)
-      {
-          GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0);
-          GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0);
-          GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, GPIO_PIN_3);
-
-          //
-         // Delay for a bit.
-         //
-         for(ui32Loop = 0; ui32Loop < 200000; ui32Loop++)
-         {
-         }
-         // Turn off the LED.
-         //
-         GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0x0);
-
-         // Delay for a bit.
-         //
-         for(ui32Loop = 0; ui32Loop < 200000; ui32Loop++)
-         {
-         }
-      }
-      else
-      {
-
-      }
-
-     }
 }

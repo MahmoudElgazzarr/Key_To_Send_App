@@ -7,6 +7,8 @@
 
 #include "Keypad.h"
 
+
+
 /*******************************************************************/
 /* Keypad_Init                                                     */
 /* Parameters : N/A                                                */
@@ -55,9 +57,9 @@ void Keypad_Init(void)
 /* Return : uint8_t                                                */
 /* Function that detect the key pressed by user on keypad          */
 /*******************************************************************/
-uint8_t Keypad_GetPressedKey_Task(void)
+uint8_t Keypad_GetPressedKey(void)
 {
-    uint8_t key ;
+    static uint8_t key=0;
     /* Set Column 1 */
     GPIOPinWrite(KEYPADCOL1PORT, KEYPADCOL1PIN,LOW);
     GPIOPinWrite(KEYPADCOL2PORT, KEYPADCOL2PIN,KEYPADCOL2PIN);
@@ -78,8 +80,6 @@ uint8_t Keypad_GetPressedKey_Task(void)
         key = 7 ;
         return key ;
     }
-    else
-        key = 0 ;
 
     /* Set Column 2 */
     GPIOPinWrite(KEYPADCOL1PORT, KEYPADCOL1PIN,KEYPADCOL1PIN);
@@ -101,8 +101,7 @@ uint8_t Keypad_GetPressedKey_Task(void)
       key = 8 ;
       return key ;
    }
-   else
-      key = 0 ;
+
    /* Set Column 3 */
    GPIOPinWrite(KEYPADCOL1PORT, KEYPADCOL1PIN,KEYPADCOL1PIN);
    GPIOPinWrite(KEYPADCOL2PORT, KEYPADCOL2PIN,KEYPADCOL2PIN);
@@ -121,10 +120,9 @@ uint8_t Keypad_GetPressedKey_Task(void)
   else if(!GPIOPinRead(KEYPADROW3PORT,KEYPADROW3PIN))
   {
       key = 9 ;
-      return key;
+      return key ;
   }
-  else
-     key = 0 ;
+
 
   return key ;
 }

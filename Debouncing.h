@@ -15,8 +15,8 @@
 #include "driverlib/gpio.h"
 #include "driverlib/sysctl.h"
 
-extern uint8_t Deboune_Flag ;
+extern uint8_t Debounce_Flag ;
 
-void Debounce_Task (void);
+extern void Debounce_Task (void);
 
 #endif /* DEBOUNCING_H_ */
