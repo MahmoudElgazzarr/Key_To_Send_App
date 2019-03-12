@@ -1,17 +1,17 @@
 ******************************************************************************
                   TI ARM Linker PC v18.1.1                     
 ******************************************************************************
->> Linked Tue Mar 12 11:23:13 2019
+>> Linked Tue Mar 12 11:32:09 2019
 
 OUTPUT FILE NAME:   <Key_To_Send_App.out>
-ENTRY POINT SYMBOL: "_c_int00_noinit_noargs"  address: 0000046d
+ENTRY POINT SYMBOL: "_c_int00_noinit_noargs"  address: 000004ad
 
 
 MEMORY CONFIGURATION
 
          name            origin    length      used     unused   attr    fill
 ----------------------  --------  ---------  --------  --------  ----  --------
-  FLASH                 00000000   00040000  000004fc  0003fb04  R  X
+  FLASH                 00000000   00040000  0000054e  0003fab2  R  X
   SRAM                  20000000   00008000  00000200  00007e00  RW X
 
 
@@ -19,9 +19,9 @@ SEGMENT ALLOCATION MAP
 
 run origin  load origin   length   init length attrs members
 ----------  ----------- ---------- ----------- ----- -------
-00000000    00000000    000004fc   000004fc    r-x
+00000000    00000000    0000054e   0000054e    r-x
   00000000    00000000    0000026c   0000026c    r-- .intvecs
-  0000026c    0000026c    00000290   00000290    r-x .text
+  0000026c    0000026c    000002e2   000002e2    r-x .text
 20000000    20000000    00000200   00000000    rw-
   20000000    20000000    00000200   00000000    rw- .stack
 
@@ -34,19 +34,20 @@ section   page    origin      length       input sections
 .intvecs   0    00000000    0000026c     
                   00000000    0000026c     tm4c123gh6pm_startup_ccs.obj (.intvecs)
 
-.text      0    0000026c    00000290     
+.text      0    0000026c    000002e2     
                   0000026c    00000132     driverlib.lib : gpio.obj (.text:GPIOPadConfigSet)
                   0000039e    00000002     --HOLE-- [fill = 0]
-                  000003a0    00000060     Keypad.obj (.text)
-                  00000400    00000038     driverlib.lib : sysctl.obj (.text:SysCtlPeripheralReady)
-                  00000438    00000034                   : sysctl.obj (.text:SysCtlPeripheralEnable)
-                  0000046c    00000030     rtsv7M4_T_le_v4SPD16_eabi.lib : boot_cortex_m.c.obj (.text:_c_int00_noinit_noargs:_c_int00_noinit_noargs)
-                  0000049c    0000002a     driverlib.lib : gpio.obj (.text:GPIODirModeSet)
-                  000004c6    00000018                   : gpio.obj (.text:GPIOPinTypeGPIOOutput)
-                  000004de    0000000c     tm4c123gh6pm_startup_ccs.obj (.text)
-                  000004ea    0000000a     main.obj (.text)
-                  000004f4    00000004     rtsv7M4_T_le_v4SPD16_eabi.lib : pre_init.c.obj (.text:_system_pre_init)
-                  000004f8    00000004                                   : exit.c.obj (.text:abort:abort)
+                  000003a0    000000a0     Keypad.obj (.text)
+                  00000440    00000038     driverlib.lib : sysctl.obj (.text:SysCtlPeripheralReady)
+                  00000478    00000034                   : sysctl.obj (.text:SysCtlPeripheralEnable)
+                  000004ac    00000030     rtsv7M4_T_le_v4SPD16_eabi.lib : boot_cortex_m.c.obj (.text:_c_int00_noinit_noargs:_c_int00_noinit_noargs)
+                  000004dc    0000002a     driverlib.lib : gpio.obj (.text:GPIODirModeSet)
+                  00000506    00000018                   : gpio.obj (.text:GPIOPinTypeGPIOOutput)
+                  0000051e    00000012                   : gpio.obj (.text:GPIOPinTypeGPIOInput)
+                  00000530    0000000c     tm4c123gh6pm_startup_ccs.obj (.text)
+                  0000053c    0000000a     main.obj (.text)
+                  00000546    00000004     rtsv7M4_T_le_v4SPD16_eabi.lib : pre_init.c.obj (.text:_system_pre_init)
+                  0000054a    00000004                                   : exit.c.obj (.text:abort:abort)
 
 .cinit     0    00000000    00000000     UNINITIALIZED
 
@@ -63,16 +64,16 @@ MODULE SUMMARY
        ------                         ----   -------   -------
     .\
        tm4c123gh6pm_startup_ccs.obj   12     620       0      
-       Keypad.obj                     96     0         0      
+       Keypad.obj                     160    0         0      
        main.obj                       10     0         0      
     +--+------------------------------+------+---------+---------+
-       Total:                         118    620       0      
+       Total:                         182    620       0      
                                                               
     C:/ti/TivaWare_C_Series-2.1.4.178/driverlib/ccs/Debug/driverlib.lib
-       gpio.obj                       372    0         0      
+       gpio.obj                       390    0         0      
        sysctl.obj                     108    0         0      
     +--+------------------------------+------+---------+---------+
-       Total:                         480    0         0      
+       Total:                         498    0         0      
                                                               
     C:\ti\ccsv8\tools\compiler\ti-cgt-arm_18.1.1.LTS\lib\rtsv7M4_T_le_v4SPD16_eabi.lib
        boot_cortex_m.c.obj            48     0         0      
@@ -83,21 +84,22 @@ MODULE SUMMARY
                                                               
        Stack:                         0      0         512    
     +--+------------------------------+------+---------+---------+
-       Grand Total:                   654    620       512    
+       Grand Total:                   736    620       512    
 
 
 GLOBAL SYMBOLS: SORTED ALPHABETICALLY BY Name 
 
 address   name                  
 -------   ----                  
-000004f9  C$$EXIT               
-0000049d  GPIODirModeSet        
+0000054b  C$$EXIT               
+000004dd  GPIODirModeSet        
 0000026d  GPIOPadConfigSet      
-000004c7  GPIOPinTypeGPIOOutput 
+0000051f  GPIOPinTypeGPIOInput  
+00000507  GPIOPinTypeGPIOOutput 
 000003a1  Keypad_Init           
-000004df  ResetISR              
-00000439  SysCtlPeripheralEnable
-00000401  SysCtlPeripheralReady 
+00000531  ResetISR              
+00000479  SysCtlPeripheralEnable
+00000441  SysCtlPeripheralReady 
 20000200  __STACK_END           
 00000200  __STACK_SIZE          
 20000200  __STACK_TOP           
@@ -109,12 +111,12 @@ ffffffff  __binit__
 ffffffff  __c_args__            
 UNDEFED   __mpu_init            
 20000000  __stack               
-0000046d  _c_int00_noinit_noargs
-000004f5  _system_pre_init      
-000004f9  abort                 
+000004ad  _c_int00_noinit_noargs
+00000547  _system_pre_init      
+0000054b  abort                 
 ffffffff  binit                 
 00000000  g_pfnVectors          
-000004eb  main                  
+0000053d  main                  
 
 
 GLOBAL SYMBOLS: SORTED BY Symbol Address 
@@ -126,16 +128,17 @@ address   name
 00000200  __STACK_SIZE          
 0000026d  GPIOPadConfigSet      
 000003a1  Keypad_Init           
-00000401  SysCtlPeripheralReady 
-00000439  SysCtlPeripheralEnable
-0000046d  _c_int00_noinit_noargs
-0000049d  GPIODirModeSet        
-000004c7  GPIOPinTypeGPIOOutput 
-000004df  ResetISR              
-000004eb  main                  
-000004f5  _system_pre_init      
-000004f9  C$$EXIT               
-000004f9  abort                 
+00000441  SysCtlPeripheralReady 
+00000479  SysCtlPeripheralEnable
+000004ad  _c_int00_noinit_noargs
+000004dd  GPIODirModeSet        
+00000507  GPIOPinTypeGPIOOutput 
+0000051f  GPIOPinTypeGPIOInput  
+00000531  ResetISR              
+0000053d  main                  
+00000547  _system_pre_init      
+0000054b  C$$EXIT               
+0000054b  abort                 
 20000000  __stack               
 20000200  __STACK_END           
 20000200  __STACK_TOP           
@@ -147,4 +150,4 @@ ffffffff  __c_args__
 ffffffff  binit                 
 UNDEFED   __mpu_init            
 
-[25 symbols]
+[26 symbols]
