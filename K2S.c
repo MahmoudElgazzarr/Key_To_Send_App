@@ -7,7 +7,14 @@
 
 #include "K2S.h"
 
-
+/****************************************************************************************/
+/* K2S_Task                                                                             */
+/* Parameters : N/A                                                                     */
+/* I/p : N/A                                                                            */
+/* O/p : N/A                                                                            */
+/* Return : void                                                                        */
+/* Function that is called by the schedular and get the data to send from keypad to uart*/
+/****************************************************************************************/
 void K2S_Task(void)
 {
 

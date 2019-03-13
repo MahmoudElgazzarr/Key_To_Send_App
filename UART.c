@@ -47,7 +47,14 @@ void UART0_init(void)
         UART_CONFIG_PAR_NONE));
 }
 
-
+/*******************************************************************/
+/* UART0_Send_Task                                                 */
+/* Parameters : N/A                                                */
+/* I/p : N/A                                                       */
+/* O/p : N/A                                                       */
+/* Return : void                                                   */
+/* task that send data on UART0                                    */
+/*******************************************************************/
 void UART0_Send_Task(void)
 {
     if(UART_Flag == 1)
